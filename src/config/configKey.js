@@ -1,11 +1,11 @@
 const config = {
-  apiKey: "AIzaSyAnTmYdp4UWM9WRwkl6W3CX5sLfya4aSxY",
-  authDomain: "todolist-3c8d3.firebaseapp.com",
-  databaseURL: "https://todolist-3c8d3.firebaseio.com",
-  projectId: "todolist-3c8d3",
-  storageBucket: "todolist-3c8d3.appspot.com",
-  messagingSenderId: "44008112369",
-  appId: "1:44008112369:web:51c5a53bff3feb62"
+  apiKey: "AIzaSyBBttr2WotF2YCfmt1sgUFVkicYAhNimkw",
+  authDomain: "find-and-auction-here.firebaseapp.com",
+  databaseURL: "https://find-and-auction-here.firebaseio.com",
+  projectId: "find-and-auction-here",
+  storageBucket: "",
+  messagingSenderId: "642574527474",
+  appId: "1:642574527474:web:b93ada333a60ca76c9d96b"
 };
 
 export default config;

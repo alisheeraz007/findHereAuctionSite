@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './all.css';
-import ToDoList from './components/toDoApp'
-import List from './components/List'
 import { getData } from './actions/action';
 import { connect } from 'react-redux'
 import firebase from 'firebase';
 import config from './config/configKey'
+import MainDashboard from './mainDashboard'
 
 firebase.initializeApp(config);
 
@@ -47,14 +46,14 @@ class App extends Component {
         <Router>
           <Route
             exact path="/"
-            render={() => <ToDoList
+            render={() => <MainDashboard
               state={this.state}
             />} />
-          <Route
+          {/* <Route
             exact path="/List"
             render={() => <List
               state={this.state}
-            />} />
+            />} /> */}
         </Router>
       </div>
     )

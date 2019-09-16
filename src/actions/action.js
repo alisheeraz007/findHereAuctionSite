@@ -1,8 +1,13 @@
-import firebase from 'firebase'
-
 export function getData(payload) {
     return{
         type: "WholeData",
+        payload,
+    }
+}
+
+export function signUp(payload) {
+    return {
+        type: "signUp",
         payload,
     }
 }
