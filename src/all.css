@@ -4,5 +4,16 @@ body{
     background-attachment: fixed;
 }
 .MuiPaper-root{
-    z-index: 0 !important;
+    /* z-index: 0 !important; */
+}
+/* .ant-select-dropdown{
+    position: fixed !important;
+    z-index: 1160 !important
+}
+.ant-select-dropdown{
+    position: fixed !important;
+    z-index: 1160 !important
+} */
+.d-block{
+    height: 35vh;
 }

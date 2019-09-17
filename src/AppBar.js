@@ -12,6 +12,7 @@ import firebase from 'firebase';
 import { connect } from 'react-redux'
 import 'antd/dist/antd.css'
 import { Select } from 'antd';
+import Paper from '@material-ui/core/Paper';
 
 const { Option } = Select;
 
@@ -31,21 +32,23 @@ const styles = theme => ({
         padding: '0 8px',
         ...theme.mixins.toolbar,
     },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing.unit * 3,
-    },
     logo: {
-        color: "Black",
+        color: "#797171",
         fontWeight: "bolder",
-        fontFamily: "serif",
+        fontFamily: "inherit",
         [theme.breakpoints.down('sm')]: {
             fontSize: "20px",
         },
     },
     selectParent: {
-        width: "30%",
-        marginLeft: 20,
+        [theme.breakpoints.down('lg')]: {
+            width: "30%",
+            marginLeft: 20,
+        },
+        [theme.breakpoints.down('md')]: {
+            width: "20%",
+            marginLeft: 20,
+        },
         [theme.breakpoints.down('sm')]: {
             width: "50%",
             marginLeft: 10,
@@ -58,13 +61,47 @@ const styles = theme => ({
         zIndex: 0
     },
     LinksParent: {
-        marginLeft: "30%",
+        [theme.breakpoints.down('lg')]: {
+            marginLeft: "30%",
+        },
+        [theme.breakpoints.down('md')]: {
+            marginLeft: "20%",
+        },
         [theme.breakpoints.down('sm')]: {
             display: "none"
         },
     },
     Links: {
-        float: "right",
+        [theme.breakpoints.down('lg')]: {
+            position: "absolute",
+            left: "90%",
+            transform: "translate(-90%, 0)"
+        },
+        [theme.breakpoints.down('md')]: {
+            position: "absolute",
+            left: "90%",
+            transform: "translate(-90%, 0)"
+        },
+        [theme.breakpoints.down('sm')]: {
+            position: "absolute",
+            left: "99%",
+            transform: "translate(-90%, 0)"
+        },
+
+    },
+    headerBut: {
+        background: "transparent",
+        border: 0,
+        cursor: "pointer",
+        width: 100,
+        '&:hover': {
+            outline: "none",
+            color: "#797171",
+        },
+    },
+    dropDown: {
+        position: "fixed",
+        zIndex: 1160
     }
 });
 
@@ -94,7 +131,7 @@ class MainDashBoad extends React.Component {
                         <Typography variant="h5" color="inherit" className={classes.logo}>
                             Find Here
             </Typography>
-                        <Typography variant="h6" color="inherit" className={classes.selectParent} >
+                        <div variant="h6" color="inherit" className={classes.selectParent} >
                             <Select
                                 showSearch
                                 className={classes.selectCountry}
@@ -105,39 +142,27 @@ class MainDashBoad extends React.Component {
                                 // onFocus={onFocus}
                                 // onBlur={onBlur}
                                 // onSearch={onSearch}
+                                dropdownClassName={classes.dropDown}
                                 filterOption={(input, option) =>
                                     option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                 }
                             >
-                                {["America", "Austrailia", "Bangladesh",
-                                    "China", "India", "Pakistan",
-                                    "Turkey", "Zimbabwe"].map((city, index) => {
+                                {["Abtabad", "Bhawalpul", "Cholistan",
+                                    "Faisalabad", "Hyderabad", "Islamabad", "Karachi",
+                                    "Lahore", "Multan", "Sialkot"].map((city, index) => {
                                         return (
                                             <Option key={index} value={city}>{city}</Option>
                                         )
                                     })}
                             </Select>
-                        </Typography>
-                        <Typography className={classes.LinksParent}>
-                            <table className={classes.Links}>
-                                <tbody>
-                                    <tr>
-                                        <td><button>Home</button></td>
-                                        <td><button>About Us</button></td>
-                                        <td><button>Categories</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </Typography>
+                        </div>
+                        <div className={classes.Links}>
+                            <button className={classes.headerBut}>
+                                Login
+                            </button>
+                        </div>
                     </Toolbar>
                 </AppBar>
-
-                <main className={classes.content}>
-
-                    <div className={classes.toolbar} />
-                    <div>
-                    </div>
-                </main>
             </div>
         )
     }

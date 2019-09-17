@@ -5,13 +5,6 @@ export function getData(payload) {
     }
 }
 
-export function signUp(payload) {
-    return {
-        type: "signUp",
-        payload,
-    }
-}
-
 export function add(payload,addType) {
     return {
         type: addType,

@@ -5,7 +5,15 @@ import { getData } from './actions/action';
 import { connect } from 'react-redux'
 import firebase from 'firebase';
 import config from './config/configKey'
-import MainDashboard from './mainDashboard'
+import Home from './components/home'
+import AirConditionerDashBoard from './components/AirConditioners/AirConditionerDashBoard'
+import Mobiles from './components/Mobiles/Mobiles'
+import Cameras from './components/Cameras/Cameras';
+import Refregirators from './components/Refregirators/Refregirators';
+import Computers from './components/Computers/Computers';
+import Generators from './components/Generators/Generators';
+import Games from './components/Games/Games';
+import Audio from './components/Audio/Audio';
 
 firebase.initializeApp(config);
 
@@ -41,19 +49,65 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
         <Router>
+
           <Route
             exact path="/"
-            render={() => <MainDashboard
+            render={() => <Home
               state={this.state}
             />} />
-          {/* <Route
-            exact path="/List"
-            render={() => <List
+
+          <Route
+            path="/home/airconditioners"
+            render={() => <AirConditionerDashBoard
               state={this.state}
-            />} /> */}
+            />} />
+
+          <Route
+            path="/home/mobiles"
+            render={() => <Mobiles
+              state={this.state}
+            />} />
+
+          <Route
+            path="/home/cameras"
+            render={() => <Cameras
+              state={this.state}
+            />} />
+
+          <Route
+            path="/home/refregirators"
+            render={() => <Refregirators
+              state={this.state}
+            />} />
+
+          <Route
+            path="/home/computers"
+            render={() => <Computers
+              state={this.state}
+            />} />
+
+          <Route
+            path="/home/generators&ups"
+            render={() => <Generators
+              state={this.state}
+            />} />
+
+          <Route
+            path="/home/games"
+            render={() => <Games
+              state={this.state}
+            />} />
+
+          <Route
+            path="/home/audio"
+            render={() => <Audio
+              state={this.state}
+            />} />
+
         </Router>
       </div>
     )
