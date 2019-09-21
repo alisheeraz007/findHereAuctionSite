@@ -13,6 +13,10 @@ import { connect } from 'react-redux'
 import 'antd/dist/antd.css'
 import { Select } from 'antd';
 import Paper from '@material-ui/core/Paper';
+import CloseIcon from '@material-ui/icons/Close';
+import SignInModel from './components/commonComponents/SignInModel';
+import profile from './logo.svg'
+import LongMenu from './components/commonComponents/menuItems';
 
 const { Option } = Select;
 
@@ -87,28 +91,89 @@ const styles = theme => ({
             left: "99%",
             transform: "translate(-90%, 0)"
         },
-
+    },
+    postingForm: {
+        [theme.breakpoints.down('lg')]: {
+            position: "absolute",
+            left: "90%",
+            transform: "translate(-90%, 0)"
+        },
+        [theme.breakpoints.down('md')]: {
+            position: "absolute",
+            left: "90%",
+            transform: "translate(-90%, 0)"
+        },
+        [theme.breakpoints.down('sm')]: {
+            position: "relative",
+            left: "70%",
+            transform: "translate(-70%, 0)",
+        },
     },
     headerBut: {
         background: "transparent",
         border: 0,
         cursor: "pointer",
-        width: 100,
+        right: "15%",
+        position: "relative",
+        transform: "translate(-15 %, 0)",
         '&:hover': {
             outline: "none",
             color: "#797171",
+        },
+        '&:focus': {
+            outline: "none",
+        },
+    },
+    headerBut2: {
+        background: "transparent",
+        border: 0,
+        cursor: "pointer",
+        right: "15%",
+        position: "relative",
+        marginLeft: 5,
+        transform: "translate(-15 %, 0)",
+        '&:hover': {
+            outline: "none",
+            color: "#797171",
+        },
+        '&:focus': {
+            outline: "none",
         },
     },
     dropDown: {
         position: "fixed",
         zIndex: 1160
+    },
+    profile: {
+        left: "95%",
+        width: "40px",
+        position: "absolute",
+        transform: "translate(-90%, 0)",
+        height: "40px",
+        borderRadius: "50%",
+        backgroundImage: `url(${profile})`
     }
 });
 
 class MainDashBoad extends React.Component {
     state = {
-        city: ""
+        city: "",
+        signIn: false,
+        userId: ""
     };
+
+    onAuthStateChanged = () => {
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({
+                    userId: user.uid
+                })
+            } else {
+                // No user is signed in.
+            }
+        });
+    }
 
     gettingValues = (name, value) => {
         this.setState({
@@ -116,6 +181,45 @@ class MainDashBoad extends React.Component {
         }, () => {
             // console.log(this.state.city)
         })
+    }
+
+    handleClickOpen = () => {
+        if (!this.state.userId) {
+            this.setState({
+                signInOpen: true,
+                signIn: true
+            })
+        } else {
+            this.setState({
+                open: true,
+                dilogeOpen: true,
+            })
+        }
+    }
+
+    handleClose = () => {
+        if (!this.state.userId) {
+            this.setState({
+                signInOpen: false
+            })
+            setTimeout(() => {
+                this.setState({
+                    signIn: false
+                })
+            }, 1000)
+        }
+        this.setState({
+            open: false
+        })
+        setTimeout(() => {
+            this.setState({
+                dilogeOpen: false
+            })
+        }, 1000)
+    }
+
+    componentWillMount() {
+        this.onAuthStateChanged()
     }
 
     render() {
@@ -131,36 +235,61 @@ class MainDashBoad extends React.Component {
                         <Typography variant="h5" color="inherit" className={classes.logo}>
                             Find Here
             </Typography>
-                        <div variant="h6" color="inherit" className={classes.selectParent} >
-                            <Select
-                                showSearch
-                                className={classes.selectCountry}
-                                placeholder="Select Country"
-                                optionFilterProp="children"
-                                name="city"
-                                onChange={(ev) => this.gettingValues("city", ev)}
-                                // onFocus={onFocus}
-                                // onBlur={onBlur}
-                                // onSearch={onSearch}
-                                dropdownClassName={classes.dropDown}
-                                filterOption={(input, option) =>
-                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }
-                            >
-                                {["Abtabad", "Bhawalpul", "Cholistan",
-                                    "Faisalabad", "Hyderabad", "Islamabad", "Karachi",
-                                    "Lahore", "Multan", "Sialkot"].map((city, index) => {
-                                        return (
-                                            <Option key={index} value={city}>{city}</Option>
-                                        )
-                                    })}
-                            </Select>
-                        </div>
-                        <div className={classes.Links}>
-                            <button className={classes.headerBut}>
-                                Login
+                        {!this.props.postingForm ?
+                            <div variant="h6" color="inherit" className={classes.selectParent} >
+                                <Select
+                                    showSearch
+                                    className={classes.selectCountry}
+                                    placeholder="Select Country"
+                                    optionFilterProp="children"
+                                    name="city"
+                                    // value={this.state.city}
+                                    onChange={(ev) => this.gettingValues("city", ev)}
+                                    // onFocus={onFocus}
+                                    // onBlur={onBlur}
+                                    // onSearch={onSearch}
+                                    dropdownClassName={classes.dropDown}
+                                    filterOption={(input, option) =>
+                                        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }
+                                >
+                                    {["All", "Abtabad", "Bhawalpul", "Cholistan",
+                                        "Faisalabad", "Hyderabad", "Islamabad", "Karachi",
+                                        "Lahore", "Multan", "Sialkot"].map((city, index) => {
+                                            return (
+                                                <Option key={index} value={city}>{city}</Option>
+                                            )
+                                        })}
+                                </Select>
+                            </div>
+                            : null}
+                        {!this.props.postingForm && !this.state.userId ?
+                            <div className={classes.Links}>
+                                <button
+                                    onClick={this.handleClickOpen}
+                                    className={classes.headerBut}
+                                >
+                                    Login
                             </button>
-                        </div>
+                                {this.state.signIn ?
+                                    <SignInModel handleClose={this.handleClose} signInOpen={this.state.signInOpen} signIn={"signIn"} />
+                                    : null}
+                            </div>
+                            :
+                            !this.props.postingForm && this.state.userId ?
+                                <div className={classes.profile}>
+
+                                </div>
+                                :
+                                <div className={classes.postingForm}>
+                                    <button className={classes.headerBut2} onClick={this.props.post}>
+                                        Post
+                            </button>
+                                    <IconButton className={classes.headerBut2} edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
+                                        <CloseIcon />
+                                    </IconButton>
+                                </div>
+                        }
                     </Toolbar>
                 </AppBar>
             </div>

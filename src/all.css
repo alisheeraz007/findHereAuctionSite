@@ -2,7 +2,8 @@ body{
     height: 100vh;
     width: 100%;
     background-attachment: fixed;
-}
+    font-family: "Lato,sans-serif" !important
+} 
 .MuiPaper-root{
     /* z-index: 0 !important; */
 }
@@ -16,4 +17,25 @@ body{
 } */
 .d-block{
     height: 35vh;
+}
+.h222 {
+    text-align: center !important;
+}
+.h222 h2{
+    color: #797171;
+    font-weight: bold;
+}
+.ant-select-dropdown{
+    z-index: 2000 !important;
+}
+.ant-message{
+    z-index: 1800 !important;
+}
+.ant-calendar-picker-container,.ant-modal-mask, .ant-modal,.ant-modal-wrap {
+    z-index: 3200 !important; 
+}
+.upload{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 }

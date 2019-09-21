@@ -1,33 +1,21 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk';
 
-function reducer(state = {}, action) {
+function reducer(state = { images: [], postImages: [] }, action) {
     // console.log(action)
     switch (action.type) {
-        case "WholeData":
+        case "wholeData":
             state = action.payload
             return state
-
-        case "signUp":
-            state = { ...state, users: !state.users ? [action.payload] : [...state.users, action.payload] }
-            return { users: state.users }
-
-        case "addUser":
-            state = { ...state, users: !state.users ? [action.payload] : [...state.users, action.payload] }
-            return { users: state.users }
-
-        case "del":
-            state.users.splice(action.payload, 1)
-            return { users: state.users }
-
-        case "updateUser":
-            state.users.splice(action.index, 1, action.payload)
-            return { users: state.users }
-
+        case "getImages":
+            state.images = action.payload
+            return state = { ...state }
+        case "postImg":
+            state.postImages = action.payload
+            return state = { ...state }
         default:
             return state
     }
 }
 
 export let store = createStore(reducer, applyMiddleware(thunk))
-

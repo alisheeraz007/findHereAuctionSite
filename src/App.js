@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './all.css';
-import { getData } from './actions/action';
+import { getData, addImages } from './actions/action';
 import { connect } from 'react-redux'
 import firebase from 'firebase';
 import config from './config/configKey'
@@ -14,6 +14,7 @@ import Computers from './components/Computers/Computers';
 import Generators from './components/Generators/Generators';
 import Games from './components/Games/Games';
 import Audio from './components/Audio/Audio';
+import ItemDetails from './components/commonComponents/ItemDetails';
 
 firebase.initializeApp(config);
 
@@ -26,22 +27,27 @@ class App extends Component {
   }
 
   componentWillMount() {
-    // firebase.database().ref().child("WholeData").on('value', (snap) => {
-    //   let obj;
-    //   if (snap.val()) {
-    //     obj = {
-    //       type: "WholeData",
-    //       payload: snap.val()
-    //     }
-    //     this.props.getData(obj.payload)
-    //   }
-    // })
-    firebase.database().ref("WholeData").once('value').then((snap) => {
+    firebase.database().ref("wholeData").on('value', (snap) => {
       let obj;
+      let postsImg = []
       if (snap.val()) {
+        if (snap.val().posts) {
+          let posts = Object.values(snap.val().posts);
+          for (let i = 0; i < posts.length; i++) {
+            firebase.storage().ref(`postImages/images/${posts[i].fileList[0].name}`).getDownloadURL()
+              .then((url) => {
+                // console.log()
+                postsImg.push({ name: posts[i].fileList[0].name, url: url })
+                this.props.addImages(postsImg)
+              })
+          }
+        }
+        if (postsImg.length) {
+          console.log(postsImg)
+        }
         obj = {
-          type: "WholeData",
-          payload: snap.val()
+          type: "wholeData",
+          payload: snap.val(),
         }
         this.props.getData(obj.payload)
       }
@@ -49,7 +55,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <div>
         <Router>
@@ -65,10 +71,20 @@ class App extends Component {
             render={() => <AirConditionerDashBoard
               state={this.state}
             />} />
+          <Route
+            path="/home/airconditioners/:topicId"
+            render={() => <ItemDetails
+              state={this.state}
+            />} />
 
           <Route
             path="/home/mobiles"
             render={() => <Mobiles
+              state={this.state}
+            />} />
+          <Route
+            path="/home/mobiles/:topicId"
+            render={() => <ItemDetails
               state={this.state}
             />} />
 
@@ -77,10 +93,20 @@ class App extends Component {
             render={() => <Cameras
               state={this.state}
             />} />
+          <Route
+            path="/home/cameras/:topicId"
+            render={() => <ItemDetails
+              state={this.state}
+            />} />
 
           <Route
             path="/home/refregirators"
             render={() => <Refregirators
+              state={this.state}
+            />} />
+          <Route
+            path="/home/refregirators/:topicId"
+            render={() => <ItemDetails
               state={this.state}
             />} />
 
@@ -89,10 +115,20 @@ class App extends Component {
             render={() => <Computers
               state={this.state}
             />} />
+          <Route
+            path="/home/computers/:topicId"
+            render={() => <ItemDetails
+              state={this.state}
+            />} />
 
           <Route
             path="/home/generators&ups"
             render={() => <Generators
+              state={this.state}
+            />} />
+          <Route
+            path="/home/generators&ups/:topicId"
+            render={() => <ItemDetails
               state={this.state}
             />} />
 
@@ -101,10 +137,20 @@ class App extends Component {
             render={() => <Games
               state={this.state}
             />} />
+          <Route
+            path="/home/games/:topicId"
+            render={() => <ItemDetails
+              state={this.state}
+            />} />
 
           <Route
             path="/home/audio"
             render={() => <Audio
+              state={this.state}
+            />} />
+          <Route
+            path="/home/audio/:topicId"
+            render={() => <ItemDetails
               state={this.state}
             />} />
 
@@ -121,6 +167,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const matchDispatchToProps = { getData }
+const matchDispatchToProps = { getData, addImages }
 
 export default connect(mapStateToProps, matchDispatchToProps)(App);

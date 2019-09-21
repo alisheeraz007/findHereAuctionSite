@@ -113,6 +113,7 @@ const styles = theme => ({
         },
     },
     media: {
+        backgroundSize: "contain",
         [theme.breakpoints.down('lg')]: {
             height: 173,
         },
@@ -126,6 +127,7 @@ const styles = theme => ({
     Category: {
         fontWeight: "bold",
         color: "#645d5d",
+        textAlign: "center",
         [theme.breakpoints.down('lg')]: {
             fontSize: 20,
         },

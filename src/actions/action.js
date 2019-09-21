@@ -1,30 +1,45 @@
 export function getData(payload) {
-    return{
-        type: "WholeData",
+    return {
+        type: "wholeData",
         payload,
     }
 }
 
-export function add(payload,addType) {
+export function addImages(payload) {
     return {
-        type: addType,
+        type: "getImages",
         payload,
     }
 }
 
-export function edit(payload, index,updateType) {
-    console.log(updateType)
+export function postImg(payload) {
+    // console.log(payload)
     return {
-        type: updateType,
-        index: index,
-        payload: payload
+        type: "postImg",
+        payload,
     }
 }
 
-export function remove(payload) {
-    console.log(payload)
-    return {
-        type: "del",
-        payload
-    }
-}
+// export function add(payload,addType) {
+//     return {
+//         type: addType,
+//         payload,
+//     }
+// }
+
+// export function edit(payload, index,updateType) {
+//     // console.log(updateType)
+//     return {
+//         type: updateType,
+//         index: index,
+//         payload: payload
+//     }
+// }
+
+// export function remove(payload) {
+//     // console.log(payload)
+//     return {
+//         type: "del",
+//         payload
+//     }
+// }
