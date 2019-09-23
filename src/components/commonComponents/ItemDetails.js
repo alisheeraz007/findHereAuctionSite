@@ -14,6 +14,7 @@ import FloatingActionButtons from './RoundButton'
 import { postImg } from '../../actions/action'
 import firebase from 'firebase'
 import Carousel from 'react-bootstrap/Carousel';
+import CommentBox from './commentBox';
 
 const styles = theme => ({
     toolbar: {
@@ -33,7 +34,6 @@ const styles = theme => ({
         flexWrap: "wrap",
         padding: "5px",
         justifyContent: "center",
-        height: "100vh",
     },
     content: {
         flexGrow: 1,
@@ -122,23 +122,23 @@ const styles = theme => ({
     mainn: {
         position: "absolute",
         width: "100%",
-        height: "100vh",
     },
     carousel: {
         background: "black",
         textAlign: "center",
         [theme.breakpoints.down('lg')]: {
             height: "55vh",
-            width: "60%",
+            width: "70%",
             marginRight: "auto"
         },
         [theme.breakpoints.down('md')]: {
             height: "55vh",
-            width: "100%",
+            width: "70%",
+            marginRight: "auto"
         },
         [theme.breakpoints.down('sm')]: {
             height: "25vh",
-            width: "100%",            
+            width: "100%",
         },
     },
     img: {
@@ -152,6 +152,47 @@ const styles = theme => ({
         [theme.breakpoints.down('sm')]: {
             height: "25vh",
         },
+    },
+    des: {
+        [theme.breakpoints.down('lg')]: {
+            height: "96%",
+            width: "28%"
+        },
+        [theme.breakpoints.down('md')]: {
+            height: "96%",
+            width: "28%"
+        },
+        [theme.breakpoints.down('sm')]: {
+            display: "none"
+        },
+    },
+    price: {
+        height: "62%",
+        border: "2px solid #d3d3d7",
+        padding: "10px"
+    },
+
+    description: {
+        height: "36%",
+        border: "2px solid #d3d3d7",
+        marginTop: "20px",
+        padding: "10px"
+    },
+    main2: {
+        display: "flex",
+        width: "100%",
+    },
+    commentBox: {
+        border: "2px solid #d3d3d7",
+        position: "relative",
+        width: "100%",
+        [theme.breakpoints.down('sm')]: {
+            display: "none"
+        },
+        marginTop: "20px",
+        padding: "10px",
+        paddingBottom: 0,
+        borderRadius: "5px",
     }
 });
 
@@ -220,12 +261,19 @@ class ItemDetails extends React.Component {
         }
     }
 
+    date = (entryNo) => {
+        let date;
+        date = entryNo.slice(0, 4) + "-" + entryNo.slice(4, 6) + "-" + entryNo.slice(6, 8)
+        return date
+    }
+
     async componentWillMount() {
         if (!this.state.topicId) {
             this.setState({
                 topicId: this.props.match.params.topicId
             })
         }
+
         await this.gettingPostImages(this.props.match.params.topicId)
     }
 
@@ -233,7 +281,11 @@ class ItemDetails extends React.Component {
         if (!this.state.matchFound) {
             if (this.props.state.posts) {
                 this.gettingPostImages(this.props.match.params.topicId)
+                let obj = Object.values(this.props.state.posts).find((obj) => {
+                    return obj.entryNo === this.state.topicId
+                })
                 this.setState({
+                    obj,
                     matchFound: true
                 })
             }
@@ -242,37 +294,60 @@ class ItemDetails extends React.Component {
 
     render() {
         const { classes } = this.props;
-        console.log(this.props)
+        // console.log(this.state.obj)
         return (
-            <div className={classes.mainn}>
-                <AppBar />
-                <main className={classes.content}>
-                    <div className={classes.toolbar} />
-                    <Paper>
-                        <div style={{ height: "5vh" }}>
+            this.state.obj ?
+                <div className={classes.mainn}>
+                    <AppBar />
+                    <main className={classes.content}>
+                        <div className={classes.toolbar} />
+                        <Paper>
+                            <div style={{ height: "5vh" }}>
 
-                        </div>
-                    </Paper>
-                    <Paper className={classes.mainBody}>
-                        {this.props.postImages.length ?
-                            <Carousel className={classes.carousel}>
-                                {this.props.postImages.map((obj) => {
-                                    return (
-                                        <Carousel.Item>
-                                            <img
-                                                className={classes.img}
-                                                src={obj.url}
-                                                alt="First slide"
-                                            />
-                                        </Carousel.Item>
-                                    )
-                                })}
-                            </Carousel>
-                            : null}
-                    </Paper>
-                </main>
-                <FloatingActionButtons />
-            </div >
+                            </div>
+                        </Paper>
+                        <Paper className={classes.mainBody}>
+                            <div className={classes.main2}>
+                                {this.props.postImages.length ?
+                                    <Carousel className={classes.carousel}>
+                                        {this.props.postImages.map((obj) => {
+                                            return (
+                                                <Carousel.Item>
+                                                    <img
+                                                        className={classes.img}
+                                                        src={obj.url}
+                                                        alt="First slide"
+                                                    />
+                                                </Carousel.Item>
+                                            )
+                                        })}
+                                    </Carousel>
+                                    : null}
+                                <div className={classes.des}>
+                                    <div className={classes.price}>
+                                        <p style={{ fontSize: "25px", fontWeight: "bold" }}>Starting Price: {this.state.obj.price}</p>
+                                        <p style={{ color: "#797171", fontSize: "18px" }}><span style={{ fontWeight: "bold", color: "black", marginRight: 5 }}>Product name: </span> {this.state.obj.productName}.</p>
+                                        <p style={{ color: "#797171", fontSize: "18px", marginBottom: 0 }}><span style={{ fontWeight: "bold", color: "black", marginRight: 5 }}>Condition: </span> {this.state.obj.condition}.</p>
+                                        <p style={{ color: "#797171", fontSize: "14px", float: "right", marginBottom: 0 }}>Posted On: {this.date(this.state.topicId)}</p><br />
+                                        <p style={{ color: "#797171", fontSize: "14px", float: "right", marginBottom: 0 }}>Posted By: {this.props.state.users[this.state.obj.uid].firstName} {this.props.state.users[this.state.obj.uid].lastName}</p><br />
+                                        <p style={{ color: "#797171", fontSize: "14px", float: "right" }}>Valid Till: {this.state.obj.validTill}</p>
+                                    </div>
+                                    <div className={classes.description}>
+                                        <h6 style={{ fontSize: "18px", fontWeight: "bold" }}> Description</h6>
+                                        <div style={{ color: "#797171" }}>
+                                            {this.state.obj.description}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={classes.commentBox}>
+                                <CommentBox postImages={this.props.postImages} topicId={this.state.topicId} obj={this.state.obj} />
+                            </div>
+                        </Paper>
+                    </main>
+                    <FloatingActionButtons />
+                </div >
+                : null
         );
     }
 }
