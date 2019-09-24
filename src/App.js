@@ -15,6 +15,7 @@ import Generators from './components/Generators/Generators';
 import Games from './components/Games/Games';
 import Audio from './components/Audio/Audio';
 import ItemDetails from './components/commonComponents/ItemDetails';
+import Profile from './components/User Profile/Profile';
 
 firebase.initializeApp(config);
 
@@ -154,6 +155,16 @@ class App extends Component {
               state={this.state}
             />} />
 
+          <Route
+            path="/myProfile"
+            render={() => <Profile
+              state={this.state}
+            />} />
+            <Route
+            path="/myProfile/:topicId"
+            render={() => <ItemDetails
+              state={this.state}
+            />} />
         </Router>
       </div>
     )

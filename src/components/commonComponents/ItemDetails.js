@@ -28,12 +28,30 @@ const styles = theme => ({
         display: 'flex',
     },
     mainBody: {
-        marginTop: "2%",
-        width: "100%",
-        display: "flex",
-        flexWrap: "wrap",
-        padding: "5px",
-        justifyContent: "center",
+        [theme.breakpoints.down('lg')]: {
+            marginTop: "2%",
+            width: "100%",
+            display: "flex",
+            flexWrap: "wrap",
+            padding: "5px",
+            justifyContent: "center",
+        },
+        [theme.breakpoints.down('md')]: {
+            marginTop: "2%",
+            width: "100%",
+            display: "flex",
+            flexWrap: "wrap",
+            padding: "5px",
+            justifyContent: "center",
+        },
+        [theme.breakpoints.down('sm')]: {
+            marginTop: "2%",
+            width: "100%",
+            padding: "5px",
+            justifyContent: "center",
+            display: "block",
+        },
+
     },
     content: {
         flexGrow: 1,
@@ -163,36 +181,80 @@ const styles = theme => ({
             width: "28%"
         },
         [theme.breakpoints.down('sm')]: {
-            display: "none"
+            height: "55vh",
+            width: "100%"
         },
     },
     price: {
-        height: "62%",
-        border: "2px solid #d3d3d7",
-        padding: "10px"
+        [theme.breakpoints.down('lg')]: {
+            height: "62%",
+            border: "2px solid #d3d3d7",
+            padding: "10px"
+        },
+        [theme.breakpoints.down('md')]: {
+            height: "62%",
+            border: "2px solid #d3d3d7",
+            padding: "10px"
+        },
+        [theme.breakpoints.down('sm')]: {
+            height: "60%",
+            border: "2px solid #d3d3d7",
+            padding: "10px",
+            marginTop: "10px",
+            borderRadius: "5px"
+        },
+
     },
 
     description: {
-        height: "36%",
-        border: "2px solid #d3d3d7",
-        marginTop: "20px",
-        padding: "10px"
+        [theme.breakpoints.down('lg')]: {
+            height: "36%",
+            border: "2px solid #d3d3d7",
+            marginTop: "20px",
+            padding: "10px"
+        },
+        [theme.breakpoints.down('md')]: {
+            height: "36%",
+            border: "2px solid #d3d3d7",
+            marginTop: "20px",
+            padding: "10px"
+        },
+        [theme.breakpoints.down('sm')]: {
+            maxHeight: "33%",
+            border: "2px solid #d3d3d7",
+            marginTop: "10px",
+            padding: "10px",
+            overflowY: "scroll",
+            borderRadius: "5px"
+        },
+
     },
     main2: {
-        display: "flex",
-        width: "100%",
+        [theme.breakpoints.down('lg')]: {
+            display: "flex",
+            width: "100%",
+        },
+        [theme.breakpoints.down('md')]: {
+            display: "flex",
+            width: "100%",
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: "100%",
+            display: "block",
+        },
+
     },
     commentBox: {
         border: "2px solid #d3d3d7",
         position: "relative",
         width: "100%",
-        [theme.breakpoints.down('sm')]: {
-            display: "none"
-        },
         marginTop: "20px",
         padding: "10px",
         paddingBottom: 0,
         borderRadius: "5px",
+        [theme.breakpoints.down('sm')]: {
+            marginTop: "5px",
+        }, 
     }
 });
 

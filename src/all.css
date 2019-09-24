@@ -44,3 +44,29 @@ body{
     overscroll-behavior-y: initial;
     max-height: 200px;
 }
+
+.ant-upload-picture-card-wrapper{
+    height: 100%;
+}
+
+@media (max-width: 959.95px) {.ant-upload.ant-upload-select-picture-card {
+    border-radius: 50% !important;
+    text-align: center ;
+    width: 100% !important;
+    height: 100% !important;
+}
+}
+@media (max-width: 1279.95px) {.ant-upload.ant-upload-select-picture-card {
+    border-radius: 50% !important;
+    text-align: center ;
+    width: 100% !important;
+    height: 100% !important;
+}
+}
+@media (max-width: 1919.95px) {.ant-upload.ant-upload-select-picture-card {
+    border-radius: 50% !important;
+    text-align: center ;
+    width: 100% !important;
+    height: 100% !important;
+}
+}

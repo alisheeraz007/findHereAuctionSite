@@ -15,8 +15,9 @@ import { Select } from 'antd';
 import Paper from '@material-ui/core/Paper';
 import CloseIcon from '@material-ui/icons/Close';
 import SignInModel from './components/commonComponents/SignInModel';
-import profile from './logo.svg'
+import profile from './Images/camera.jpg'
 import LongMenu from './components/commonComponents/menuItems';
+import { withRouter } from 'react-router-dom'
 
 const { Option } = Select;
 
@@ -151,7 +152,8 @@ const styles = theme => ({
         transform: "translate(-90%, 0)",
         height: "40px",
         borderRadius: "50%",
-        backgroundImage: `url(${profile})`
+        backgroundImage: `url(${profile})`,
+        backgroundSize: "contain",
     }
 });
 
@@ -218,6 +220,10 @@ class MainDashBoad extends React.Component {
         }, 1000)
     }
 
+    userProfile = () => {
+        this.props.history.push("/myProfile")
+    }
+
     componentWillMount() {
         this.onAuthStateChanged()
     }
@@ -277,7 +283,7 @@ class MainDashBoad extends React.Component {
                             </div>
                             :
                             !this.props.postingForm && this.state.userId ?
-                                <div className={classes.profile}>
+                                <div className={classes.profile} onClick={this.userProfile}>
 
                                 </div>
                                 :
@@ -311,4 +317,4 @@ const mapStateToProps = (state) => {
 
 const matchDispatchToProps = {}
 
-export default withStyles(styles)(connect(mapStateToProps, matchDispatchToProps)(MainDashBoad));
+export default withStyles(styles)(connect(mapStateToProps, matchDispatchToProps)(withRouter(MainDashBoad)));
